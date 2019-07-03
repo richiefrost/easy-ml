@@ -1,4 +1,4 @@
-# Easy modeler
+# Easy ML
 Quick and easy classification modeling with scikit-learn and pandas
 
 ## Key ideas
