@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
     name="easy-ml-rsfrost",
-    version="0.0.1",
+    version="0.0.3",
     author="Richie Frost",
     author_email="richard.scott.frost@gmail.com",
     description="Simplified machine learning training with scikit-learn and pandas",
