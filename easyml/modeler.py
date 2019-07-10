@@ -11,7 +11,7 @@ class Modeler:
     --------------------------
     Let's say you want to run a classification experiment. Here's how you do it:
     
-    >>> from easyml import Model
+    >>> from easyml.modeler import Model
     >>> modeler = Modeler(df, features, label, model, verbose=True)
     >>> modeler.fit()
     
