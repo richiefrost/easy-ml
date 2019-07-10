@@ -11,9 +11,9 @@ class Modeler:
     --------------------------
     Let's say you want to run a classification experiment. Here's how you do it:
     
-    >>> from scikit-modeler import Modeler
-    >>> modeler = Modeler(df, features, label, model)
-    >>> modeler.train()
+    >>> from easyml import Model
+    >>> modeler = Modeler(df, features, label, model, verbose=True)
+    >>> modeler.fit()
     
         Getting metrics for train:
         -----------------------------------------
@@ -38,7 +38,7 @@ class Modeler:
 
     """
 
-    def __init__(self, df, features, label, model):
+    def __init__(self, df, features, label, model, verbose=False):
         '''
         df = Pandas dataframe
         features = Feature names array
@@ -50,8 +50,9 @@ class Modeler:
         self._label = label
         self._model = model
         self._metrics = {}
+        self._verbose = verbose
         
-    def train(self):
+    def fit(self):
         X, y = self._df[self._features], self._df[self._label]
         X_tr, X_ts, Y_tr, Y_ts = train_test_split(X, y, test_size=0.2)
         self._model.fit(X_tr, Y_tr)
@@ -68,18 +69,31 @@ class Modeler:
         '''
         Data type can be train, test, or full
         '''
-        print('Getting metrics for {}:'.format(data_type))
-        print('-----------------------------------------')
+        if self._verbose:
+            print('Getting metrics for {}:'.format(data_type))
+            print('-----------------------------------------')
         self._metrics[data_type] = {}
         funcs = [recall_score, precision_score, roc_auc_score, accuracy_score]
         for func in funcs:
             metric_name = func.__name__
             metric_score = func(y_true, y_pred)
-            print('{}: {}'.format(metric_name, metric_score))
+            if self._verbose:
+                print('{}: {}'.format(metric_name, metric_score))
             self._metrics[data_type][metric_name] = metric_score
-        print()
+        if self._verbose:
+            print()
         
     def to_pickle(self, filename):
-        print('Saving to {}'.format(filename))
+        if self._verbose:
+            print('Saving to {}'.format(filename))
         with open(filename, 'wb') as f:
             pickle.dump(self, f)
+
+    def get_model(self):
+        return self._model
+
+    def get_metrics(self):
+        return self._metrics
+
+    def get_features(self):
+        return self._features
