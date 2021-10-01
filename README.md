@@ -7,6 +7,15 @@ from easyml.modeler import Modeler
 
 modeler = Modeler(df, features, label, model, verbose=True)
 modeler.fit()
+
+# Export model
+model = modeler.get_model()
+
+# Get metrics
+metrics = modeler.get_metrics()
+
+# Save model as pkl file
+modeler.to_pickle('model.pkl')
 ```
 
 ## Key ideas
